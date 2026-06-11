@@ -19,7 +19,8 @@ from flask_wtf.csrf import CSRFProtect, generate_csrf, CSRFError
 load_dotenv()
 
 app = Flask(__name__)
-
+app.config['TEMPLATES_AUTO_RELOAD'] = True
+app.jinja_env.auto_reload = True
 # ---------- Безопасность ----------
 app.secret_key = os.environ.get('SECRET_KEY')
 if not app.secret_key:
