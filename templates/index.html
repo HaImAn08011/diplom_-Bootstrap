@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Каталог книг</h2>
+    <form method="GET" class="d-flex gap-2">
+        <label class="small" style="align-self:center;">Сортировать:</label>
+        <select name="sort" onchange="this.form.submit()" style="padding:0.3rem; border-radius:20px;">
+            <option value="default" {% if current_sort == 'default' %}selected{% endif %}>По умолчанию</option>
+            <option value="price_asc" {% if current_sort == 'price_asc' %}selected{% endif %}>Цена ▲</option>
+            <option value="price_desc" {% if current_sort == 'price_desc' %}selected{% endif %}>Цена ▼</option>
+            <option value="title_asc" {% if current_sort == 'title_asc' %}selected{% endif %}>Название А-Я</option>
+        </select>
+        {% if search %}
+        <input type="hidden" name="search" value="{{ search }}">
+        {% endif %}
+    </form>
+</div>
+
+<div class="catalog-grid">
+    {% for book in books %}
+    <div class="book-card">
+        <div class="book-img-wrapper">
+            <div class="book-img-placeholder">📖</div>
+        </div>
+        <div class="card-body">
+            <h5 class="book-title">{{ book.title }}</h5>
+            <p class="book-author">{{ book.author }}</p>
+            <div class="mt-auto">
+                <div class="book-price">{{ book.price }} ₽</div>
+                <a href="/add_to_cart/{{ book.id }}" class="btn-book">В корзину</a>
+                {% if session.username %}
+                    {% if not book.is_reserved %}
+                        <a href="/reserve/{{ book.id }}" class="btn-outline-secondary">📅 Забронировать</a>
+                    {% else %}
+                        <span class="btn-secondary">🔒 Забронирована</span>
+                    {% endif %}
+                {% else %}
+                    <a href="/login" class="btn-outline-secondary">🔒 Войдите</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

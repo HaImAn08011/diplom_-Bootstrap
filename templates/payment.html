@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card">
+            <h3>Оформление заказа</h3>
+            <h5>Ваши книги:</h5>
+            <ul style="list-style:none; padding:0;">
+                {% for item in items %}
+                <li class="d-flex justify-content-between">
+                    {{ item.title }} ({{ item.author }})
+                    <span class="fw-bold">{{ item.price }} ₽</span>
+                </li>
+                {% endfor %}
+                <li class="d-flex justify-content-between fw-bold mt-2">
+                    Итого
+                    <span>{{ total }} ₽</span>
+                </li>
+            </ul>
+            <h5>Способ оплаты (демо-режим)</h5>
+            <form method="POST">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                <div class="form-group">
+                    <select name="payment_method" class="form-control">
+                        <option value="card">Банковская карта (тестовая)</option>
+                        <option value="cash">Наличные при получении</option>
+                        <option value="online">Электронный кошелёк</option>
+                    </select>
+                </div>
+                <div class="alert alert-info small">Это тестовый режим. Никакие деньги не списываются.</div>
+                <button type="submit" class="btn-success w-100">Оплатить (демо)</button>
+                <a href="/cart" class="btn-outline-secondary w-100 mt-2" style="display:block; text-align:center;">Вернуться в корзину</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

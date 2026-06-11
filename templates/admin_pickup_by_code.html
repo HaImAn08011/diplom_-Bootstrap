@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card">
+            <h3>🔓 Выдача книги по коду</h3>
+            <form method="POST">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                <div class="form-group">
+                    <label class="form-label">Код бронирования</label>
+                    <input type="text" name="code" class="form-control text-center" placeholder="Например: A1B2C3" autocomplete="off" required style="font-family: monospace; font-size: 1.5rem; text-align:center;">
+                    <small class="small text-muted">Введите код, который клиент получил при бронировании.</small>
+                </div>
+                <button type="submit" class="btn-success w-100">✅ Выдать книгу</button>
+                <a href="/admin" class="btn-outline-secondary w-100 mt-2" style="display:block; text-align:center;">← Вернуться в админку</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
